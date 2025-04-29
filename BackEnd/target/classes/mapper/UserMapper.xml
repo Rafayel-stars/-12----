@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bookmanagesystem01.mapper.UserMapper">
+
+    <!-- 查询用户 -->
+    <select id="getUserById" parameterType="int" resultType="org.example.bookmanagesystem01.entity.User">
+        SELECT * FROM bms01.user WHERE id = #{id}
+    </select>
+
+    <!-- 新增用户 -->
+    <insert id="addUser" parameterType="org.example.bookmanagesystem01.entity.User">
+        INSERT INTO bms01.user (no, name, password, age, sex, phone, is_valid, user_type)
+        VALUES (#{no}, #{name}, #{password}, #{age}, #{sex}, #{phone}, #{is_valid}, #{user_type})
+    </insert>
+
+    <!-- 修改用户 -->
+    <update id="updateUser" parameterType="org.example.bookmanagesystem01.entity.User">
+        UPDATE bms01.user
+        SET no = #{no},
+            name = #{name},
+            password = #{password},
+            age = #{age},
+            sex = #{sex},
+            phone = #{phone},
+            is_valid = #{is_valid},
+            user_type = #{user_type}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM bms01.user WHERE id = #{id}
+    </delete>
+
+    <!-- 根据账号和密码查询用户（用于登录） -->
+    <select id="findByNoAndPassword" parameterType="map" resultType="org.example.bookmanagesystem01.entity.User">
+        SELECT * FROM bms01.user WHERE no = #{no} AND password = #{password}
+    </select>
+
+</mapper>

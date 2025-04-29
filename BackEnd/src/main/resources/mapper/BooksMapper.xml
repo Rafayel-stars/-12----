@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bookmanagesystem01.mapper.BooksMapper">
+
+    <!-- 查询图书 -->
+    <select id="getBookById" parameterType="int" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE id = #{id}
+    </select>
+
+    <!-- 新增图书 -->
+    <insert id="addBook" parameterType="org.example.bookmanagesystem01.entity.Books">
+        INSERT INTO bms01.books (isbn, title, author, category, status)
+        VALUES (#{isbn}, #{title}, #{author}, #{category}, #{status})
+    </insert>
+
+    <!-- 修改图书 -->
+    <update id="updateBook" parameterType="org.example.bookmanagesystem01.entity.Books">
+        UPDATE bms01.books
+        SET isbn = #{isbn},
+            title = #{title},
+            author = #{author},
+            category = #{category},
+            status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除图书 -->
+    <delete id="deleteBook" parameterType="int">
+        DELETE FROM bms01.books WHERE id = #{id}
+    </delete>
+
+    <!-- 搜索图书 -->
+    <select id="searchBooks" parameterType="string" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE title LIKE CONCAT('%', #{title}, '%')
+    </select>
+
+    <!-- 更改图书借阅状态 -->
+    <update id="changeBookStatus" parameterType="map">
+        UPDATE bms01.books
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

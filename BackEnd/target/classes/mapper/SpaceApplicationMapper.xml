@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bookmanagesystem01.mapper.SpaceApplicationMapper">
+
+    <!-- 查询空间申请记录 -->
+    <select id="getSpaceApplicationById" parameterType="int" resultType="org.example.bookmanagesystem01.entity.SpaceApplication">
+        SELECT * FROM bms01.space_application WHERE application_id = #{application_id}
+    </select>
+
+    <!-- 新增空间申请记录 -->
+    <insert id="addSpaceApplication" parameterType="org.example.bookmanagesystem01.entity.SpaceApplication">
+        INSERT INTO bms01.space_application (space_id, applicant_name, appointment_time, duration, status)
+        VALUES (#{space.space_id}, #{applicant_name}, #{appointment_time}, #{duration}, #{status})
+    </insert>
+
+    <!-- 修改空间申请记录 -->
+    <update id="updateSpaceApplication" parameterType="org.example.bookmanagesystem01.entity.SpaceApplication">
+        UPDATE bms01.space_application
+        SET space_id = #{space.space_id},
+            applicant_name = #{applicant_name},
+            appointment_time = #{appointment_time},
+            duration = #{duration},
+            status = #{status}
+        WHERE application_id = #{application_id}
+    </update>
+
+    <!-- 删除空间申请记录 -->
+    <delete id="deleteSpaceApplication" parameterType="int">
+        DELETE FROM bms01.space_application WHERE application_id = #{application_id}
+    </delete>
+
+    <!-- 根据申请人姓名查询空间申请记录 -->
+    <select id="findByApplicantName" parameterType="string" resultType="org.example.bookmanagesystem01.entity.SpaceApplication">
+        SELECT * FROM bms01.space_application WHERE applicant_name = #{applicant_name}
+    </select>
+
+    <!-- 修改空间申请表审核状态 -->
+    <update id="changeSpaceApplicationStatus" parameterType="map">
+        UPDATE bms01.space_application
+        SET status = #{status}
+        WHERE application_id = #{id}
+    </update>
+
+</mapper>
