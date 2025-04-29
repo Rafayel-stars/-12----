@@ -1,0 +1,21 @@
+{
+    "id": "u-qrcode",
+    "name": "QRcode（一个uniapp绘制二维码图案的组件）",
+    "displayName": "QRcode（一个uniapp绘制二维码图案的组件）",
+    "version": "1.0.1",
+    "description": "uniapp绘制二维码图案",
+    "keywords": [
+        "QRcode",
+        "uniapp"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    },
+    "dependencies": {
+        "@qiun/ucharts": "^2.5.0-20230101",
+        "tki-qrcode": "^0.1.6"
+    }
+}
