@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bookmanagesystem01.mapper.UserMapper">
+
+    <!-- 根据 ID 查询用户（自动包含新字段，无需修改） -->
+    <select id="getUserId" parameterType="int" resultType="org.example.bookmanagesystem01.entity.User">
+        SELECT * FROM bms01.user WHERE id = #{id}
+    </select>
+
+    <!-- 根据账号查询用户（自动包含新字段，无需修改） -->
+    <select id="findByNo" parameterType="string" resultType="org.example.bookmanagesystem01.entity.User">
+        SELECT * FROM bms01.user WHERE no = #{no}
+    </select>
+
+    <!-- 根据姓名查询用户，返回列表（自动包含新字段，无需修改） -->
+    <select id="findByName" parameterType="string" resultType="org.example.bookmanagesystem01.entity.User">
+        SELECT * FROM bms01.user WHERE name = #{name}
+    </select>
+
+    <!-- 根据电话查询用户，返回列表（自动包含新字段，无需修改） -->
+    <select id="findByPhone" parameterType="string" resultType="org.example.bookmanagesystem01.entity.User">
+        SELECT * FROM bms01.user WHERE phone = #{phone}
+    </select>
+
+    <!-- 新增用户（添加 register_time 字段） -->
+    <insert id="addUser" parameterType="org.example.bookmanagesystem01.entity.User">
+        INSERT INTO bms01.user
+        (no, name, password, age, sex, phone, is_valid, user_type, register_time) <!-- 新增字段 -->
+        VALUES
+        (#{no}, #{name}, #{password}, #{age}, #{sex}, #{phone}, #{is_valid}, #{userType}, NOW()) <!-- 映射实体类属性 -->
+    </insert>
+
+    <!-- 修改用户（添加 register_time 更新） -->
+    <update id="updateUser" parameterType="org.example.bookmanagesystem01.entity.User">
+        UPDATE bms01.user
+        SET
+        no = #{no},
+        name = #{name},
+        password = #{password},
+        age = #{age},
+        sex = #{sex},
+        phone = #{phone},
+        is_valid = #{is_valid},
+        user_type = #{userType},
+        register_time = #{registerTime} <!-- 新增字段更新 -->
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除用户（无需修改） -->
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM bms01.user WHERE id = #{id}
+    </delete>
+
+    <!-- 根据账号和密码查询用户（无需修改） -->
+    <select id="findByNoAndPassword" parameterType="map" resultType="org.example.bookmanagesystem01.entity.User">
+        SELECT * FROM bms01.user WHERE no = #{no} AND password = #{password}
+    </select>
+
+    <!-- 检查 no 是否存在（无需修改） -->
+    <select id="existsByNo" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM bms01.user WHERE no = #{no}
+    </select>
+
+</mapper>
