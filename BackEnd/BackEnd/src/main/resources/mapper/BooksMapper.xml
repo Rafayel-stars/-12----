@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bookmanagesystem01.mapper.BooksMapper">
+
+    <!-- 根据ID查询图书 -->
+    <select id="getBookById" parameterType="int" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE id = #{id}
+    </select>
+
+    <!-- 新增图书（包含所有字段） -->
+    <insert id="addBook" parameterType="org.example.bookmanagesystem01.entity.Books">
+        INSERT INTO bms01.books
+        (isbn, library_code, title, author, category, status, entry_time) <!-- 新增 library_code 和 entry_time -->
+        VALUES
+        (#{isbn}, #{libraryCode}, #{title}, #{author}, #{category}, #{status}, NOW()) <!-- 驼峰自动映射 -->
+    </insert>
+
+    <!-- 修改图书（包含所有可更新字段） -->
+    <update id="updateBook" parameterType="org.example.bookmanagesystem01.entity.Books">
+        UPDATE bms01.books
+        SET
+        isbn = #{isbn},
+        library_code = #{libraryCode}, <!-- 新增 library_code 更新 -->
+        title = #{title},
+        author = #{author},
+        category = #{category},
+        status = #{status},
+        entry_time = #{entryTime} <!-- 新增入库时间更新 -->
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除图书 -->
+    <delete id="deleteBook" parameterType="int">
+        DELETE FROM bms01.books WHERE id = #{id}
+    </delete>
+
+    <!-- 更改图书借阅状态（使用Map传递参数） -->
+    <update id="changeBookStatus" parameterType="map">
+        UPDATE bms01.books
+        SET status = #{status} <!-- 从Map获取"status" -->
+        WHERE id = #{id} <!-- 从Map获取"id" -->
+    </update>
+
+    <!-- 按标题模糊搜索图书（匹配接口方法名 searchBooksTitle） -->
+    <select id="searchBooksTitle" parameterType="string" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE title LIKE CONCAT('%', #{title}, '%')
+    </select>
+
+    <!-- 按ISBN搜索图书 -->
+    <select id="searchBooksIsbn" parameterType="string" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE isbn = #{isbn}
+    </select>
+
+    <!-- 按作者搜索图书 -->
+    <select id="searchBooksAuthor" parameterType="string" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE author = #{author}
+    </select>
+
+    <!-- 按图书馆自编编号查询图书（修正方法名，原双k错误） -->
+    <select id="getBookByLibrarycode" parameterType="string" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE library_code = #{librarycode}
+    </select>
+
+    <!-- 按分类模糊搜索图书 -->
+    <select id="searchBooksCategory" parameterType="string" resultType="org.example.bookmanagesystem01.entity.Books">
+        SELECT * FROM bms01.books WHERE category LIKE CONCAT('%', #{category}, '%')
+    </select>
+
+</mapper>
